@@ -8,3 +8,6 @@ api-boilerplate.iml
 
 # mongodb data
 data/
+
+# config
+.env
