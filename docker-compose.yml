@@ -1,0 +1,43 @@
+version: '3.7'
+
+networks:
+  backend:
+    driver: bridge
+    
+services:
+  server:
+    container_name: api-boilerplate-server
+    hostname: api-boilerplate-server
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: api-boilerplate-server:1.0.0
+    restart: on-failure
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "3000:3000"
+    networks:
+      - backend
+    environment:
+      - ENV=development
+    depends_on:
+      - database
+    command: npm run dev
+
+  database:
+    container_name: api-boilerplate-database
+    hostname: api-boilerplate-database
+    image: mongo:3.6
+    restart: on-failure
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+    environment:
+      MONGO_INITDB_DATABASE: api-boilerplate
+      MONGO_INITDB_ROOT_USERNAME: username
+      MONGO_INITDB_ROOT_PASSWORD: password
