@@ -26,7 +26,7 @@ exports.validRefreshNeeded = (req, res, next) => {
 
 exports.validJWTNeeded = (req, res, next) => {
   // if there's a token
-  if (config.node_env === 'development' && config.jwt.raw_token) {
+  if (config.node_env === 'development' && config.jwt.raw_token && req.query.raw_token) {
     if (req.query.raw_token === config.jwt.raw_token) {
       logger.warn('authenticated using raw_token')
       req.jwt = { permissionLevel: 1 }
