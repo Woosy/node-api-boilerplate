@@ -4,11 +4,10 @@ const config = require('../config/config')
 const logger = require('../config/winston')
 
 exports.verifyRefreshBodyField = (req, res, next) => {
-  if (req.body && req.body.refresh_token) {
-    return next()
-  } else {
+  if (!req.body || !req.body.refresh_token) {
     return res.status(400).json({ error: 'You need to pass refresh_token field' })
   }
+  return next()
 }
 
 exports.validRefreshNeeded = (req, res, next) => {

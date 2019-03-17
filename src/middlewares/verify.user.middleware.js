@@ -4,11 +4,10 @@ const User = require('../models/user.model')
 // check if required fields aren't missing
 exports.hasAuthValidFields = (req, res, next) => {
   const _email = req.body.email
-  const _username = req.body.username
   const _password = req.body.password
 
   const errors = []
-  if (!_email || !_username) errors.push('Missing email/username field')
+  if (!_email) errors.push('Missing email field')
   if (!_password) errors.push('Missing password field')
 
   if (errors.length) {
@@ -46,10 +45,9 @@ exports.hasRegisterValidFields = (req, res, next) => {
 // check if user has valid authentication data
 exports.isPasswordAndUserMatch = async (req, res, next) => {
   const _email = req.body.email
-  const _username = req.body.username
   const _password = req.body.password
 
-  const user = await User.findOne({ $or: [{ email: _email }, { username: _username }] })
+  const user = await User.findOne({ email: _email })
   if (!user) {
     return res.status(404).json({
       message: 'No user found'
@@ -65,8 +63,8 @@ exports.isPasswordAndUserMatch = async (req, res, next) => {
     }
     return next()
   } else {
-    return res.status(400).json({
-      message: 'Email, username or password is invalid'
+    return res.status(401).json({
+      message: 'Incorrect password'
     })
   }
 }

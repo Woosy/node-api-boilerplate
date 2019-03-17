@@ -1,15 +1,16 @@
 {
   "name": "api-boilerplate",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "NodeJS API boilerplate",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "./node_modules/.bin/nodemon src/app.js"
+    "dev": "./node_modules/.bin/nodemon src/app.js",
+    "gen-doc": "./node_modules/.bin/apidoc -i src/ -o doc/",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Woosy/api-boilerplate.git"
+    "url": "git+https://github.com/Woosy/node-api-boilerplate.git"
   },
   "keywords": [
     "nodejs",
@@ -20,10 +21,11 @@
   "author": "Arthur 'Woosy' Dufour",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Woosy/api-boilerplate/issues"
+    "url": "https://github.com/Woosy/node-api-boilerplate/issues"
   },
-  "homepage": "https://github.com/Woosy/api-boilerplate#readme",
+  "homepage": "https://github.com/Woosy/node-api-boilerplate#readme",
   "dependencies": {
+    "apidocs-template": "git://github.com/EvandroViva/apidocjs_template.git",
     "bcrypt": "^3.0.4",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
