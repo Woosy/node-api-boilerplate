@@ -39,9 +39,30 @@ exports.getById = async (req, res) => {
 
   const user = await User.findById(_userId)
     .select('firstname lastname username email')
+
   if (!user) {
     return res.status(404).json({ message: 'User not found' })
   }
 
   res.status(200).json({ user: user })
+}
+
+// updates user informations
+exports.update = async (req, res) => {
+  const _userId = req.params.userId
+  const _firstname = req.body.firstname
+  const _lastname = req.body.lastname
+
+  try {
+    const user = await User.findById(_userId)
+    if (!user) return res.status(404).json({ message: 'User not found' })
+
+    if (_firstname) user.firstname = _firstname
+    if (_lastname) user.lastname = _lastname
+
+    await user.save()
+    return res.status(200).json({ message: 'User has successfuly been updated' })
+  } catch (err) {
+    return res.status(400).json({ error: 'Please provide a correct userId' })
+  }
 }

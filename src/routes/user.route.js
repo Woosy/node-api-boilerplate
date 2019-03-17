@@ -112,4 +112,24 @@ router.get('/:userId', [
   UserController.getById
 ])
 
+/**
+ * @api {patch} /user/:userId Updates User informations
+ * @apiVersion  0.0.1
+ * @apiName UpdateUser
+ * @apiGroup User
+ * @apiPermission none
+ *
+ * @apiParam {String} [firstname] New firstname to set for the User.
+ * @apiParam {String} [lastname]  New lastname to set for the User.
+ *
+ * @apiSuccess (Success 200) {String} message Response information message.
+ *
+ * @apiError UserNotFound There are no user with the provided <code>id</code>.
+ */
+router.patch('/:userId', [
+  ValidationMiddleware.validJWTNeeded,
+  PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
+  UserController.update
+])
+
 module.exports = router
